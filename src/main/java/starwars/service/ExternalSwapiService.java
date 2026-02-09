@@ -20,8 +20,8 @@ public class ExternalSwapiService {
     private final String characterPath;
 
     public ExternalSwapiService(RestClient restClient,
-                                @Value("$swapi.path.people") String peoplePath,
-                                @Value("$swapi.path.character") String characterPath) {
+                                @Value("${swapi.path.people}") String peoplePath,
+                                @Value("${swapi.path.character}") String characterPath) {
         this.restClient = restClient;
         this.peoplePath = peoplePath;
         this.characterPath = characterPath;

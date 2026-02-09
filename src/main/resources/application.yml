@@ -1,5 +1,11 @@
 swapi:
   url: https://swapi.dev/api
+  connect-timeout: 5000
+  read-timeout: 10000
   path:
     people: people/?page=
     character: people/{id}
+
+auth:
+  access-token-expiry: 600000
+  refresh-token-expiry: 86400000
