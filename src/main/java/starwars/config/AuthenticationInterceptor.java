@@ -2,6 +2,8 @@ package starwars.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import starwars.exception.UnauthorizedException;
@@ -9,6 +11,7 @@ import starwars.service.AuthenticationService;
 
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
@@ -23,6 +26,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         String authHeader = request.getHeader(AUTHORIZATION_HEADER);
 
         if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
+            logger.warn("Missing or invalid Authorization header");
             throw new UnauthorizedException("Missing or invalid Authorization header");
         }
 

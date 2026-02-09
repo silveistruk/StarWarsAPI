@@ -1,5 +1,7 @@
 package starwars.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import starwars.dto.*;
@@ -13,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AuthenticationService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
+
     private final Map<String, TokenData> accessTokens = new ConcurrentHashMap<>();
     private final Map<String, TokenData> refreshTokens = new ConcurrentHashMap<>();
 
@@ -26,6 +30,8 @@ public class AuthenticationService {
     }
 
     public LoginResponse login(LoginRequest request) {
+        logger.info("Login attempt for username: {}", request.username());
+
         validateRequest(request);
 
         String username = request.username();
@@ -39,6 +45,8 @@ public class AuthenticationService {
         accessTokens.put(accessToken, accessTokenData);
         refreshTokens.put(refreshToken, refreshTokenData);
 
+        logger.info("User {} logged in successfully", username);
+
         UserInfo user = UserInfo.builder().username(username).build();
         return LoginResponse.builder()
                 .accessToken(accessToken)
@@ -48,18 +56,22 @@ public class AuthenticationService {
     }
 
     public RefreshTokenResponse refresh(RefreshTokenRequest request) {
+        logger.info("Token refresh attempt");
+
         validateRequest(request);
 
         String refreshToken = request.refreshToken();
-
         TokenData tokenData = refreshTokens.get(refreshToken);
 
         if (tokenData == null) {
+            logger.warn("Invalid refresh token");
             throw new UnauthorizedException("Invalid refresh token");
         }
 
         if (isTokenExpired(tokenData)) {
             refreshTokens.remove(refreshToken);
+            logger.warn("Refresh token expired");
+
             throw new UnauthorizedException("Refresh token expired");
         }
 
@@ -68,17 +80,22 @@ public class AuthenticationService {
         TokenData newAccessTokenData = new TokenData(tokenData.username, now + accessTokenExpiry);
 
         accessTokens.put(newAccessToken, newAccessTokenData);
+
+        logger.info("New access token generated for user: {}", tokenData.username);
         return RefreshTokenResponse.builder().accessToken(newAccessToken).build();
     }
 
     public void logout(String accessToken) {
-        Objects.requireNonNull(accessToken, "accessToken must not be null");
+        logger.info("Logout attempt");
+
+        Objects.requireNonNull(accessToken, "AccessToken must not be null");
 
         TokenData tokenData = accessTokens.remove(accessToken);
         if (tokenData != null) {
             refreshTokens
                     .entrySet()
                     .removeIf(entry -> Objects.equals(entry.getValue().username, tokenData.username));
+            logger.info("User {} logged out successfully", tokenData.username);
         }
     }
 
@@ -89,10 +106,12 @@ public class AuthenticationService {
         TokenData tokenData = accessTokens.get(token);
 
         if (tokenData == null) {
+            logger.warn("Invalid access token");
             throw new UnauthorizedException("Invalid or expired access token");
         }
         if (isTokenExpired(tokenData)) {
             accessTokens.remove(token);
+            logger.warn("Access token expired");
             throw new UnauthorizedException("Access token expired");
         }
         return tokenData.username;

@@ -9,3 +9,12 @@ swapi:
 auth:
   access-token-expiry: 600000
   refresh-token-expiry: 86400000
+
+logging:
+  level:
+    root: INFO
+    starwars: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%ex"

@@ -1,5 +1,7 @@
 package starwars.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import starwars.dto.CharacterResponse;
 
@@ -8,7 +10,10 @@ import java.util.List;
 
 @Service
 public class FavouritesService {
+    private static final Logger logger = LoggerFactory.getLogger(FavouritesService.class);
+
     public List<CharacterResponse> getFavourites(String username) {
+        logger.info("Getting favourites for user: {}", username);
         return Arrays.asList(
                 CharacterResponse.builder()
                         .name("Luke Skywalker")

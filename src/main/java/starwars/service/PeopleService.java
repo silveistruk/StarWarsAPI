@@ -1,5 +1,7 @@
 package starwars.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import starwars.dto.CharacterResponse;
 import starwars.dto.PeopleResponse;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 public class PeopleService {
+    private static final Logger logger = LoggerFactory.getLogger(PeopleService.class);
 
     private final ExternalSwapiService swapiService;
 
@@ -19,6 +22,8 @@ public class PeopleService {
     }
 
     public PeopleResponse getPeople(Integer page) {
+        logger.debug("Getting people list for page: {}", page);
+
         if (page == null || page < 1) {
             throw new IllegalArgumentException("Page number must be positive. Given page number: " + page);
         }
@@ -38,7 +43,9 @@ public class PeopleService {
     }
 
     public CharacterResponse getCharacterById(Integer id) {
-        if(id == null || id < 1) {
+        logger.debug("Getting person details for ID: {}", id);
+
+        if (id == null || id < 1) {
             throw new IllegalArgumentException("Character id must be positive. Given character id: " + id);
         }
 

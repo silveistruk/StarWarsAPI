@@ -1,5 +1,7 @@
 package starwars.helper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import starwars.dto.CharacterResponse;
 import starwars.dto.SwapiCharacterResponse;
 
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class CharacterInfoConverter {
+    private static final Logger logger = LoggerFactory.getLogger(CharacterInfoConverter.class);
+
     private static final Pattern NUMBER_PATTERN = Pattern
             .compile("^-?\\d+(\\.\\d+)?$");
 
@@ -41,6 +45,7 @@ public class CharacterInfoConverter {
             double heightMeters = Double.parseDouble(height) / 100;
             return String.format("%.2f", heightMeters);
         } catch (NumberFormatException e) {
+            logger.warn("Could not parse height: {}", height);
             return UNKNOWN;
         }
     }
