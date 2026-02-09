@@ -8,5 +8,5 @@ import java.util.List;
 public record PeopleResponse(Integer count,
                              String next,
                              String previous,
-                             List<SwapiCharacterResponse> results) {
+                             List<CharacterResponse> results) {
 }

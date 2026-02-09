@@ -1,6 +1,5 @@
 package starwars.dto;
 
-
 import lombok.Builder;
 
 import java.util.List;

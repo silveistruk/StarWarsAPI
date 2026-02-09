@@ -1,2 +1,5 @@
 swapi:
   url: https://swapi.dev/api
+  path:
+    people: people/?page=
+    character: people/{id}
