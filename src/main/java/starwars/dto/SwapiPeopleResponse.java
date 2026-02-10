@@ -1,13 +1,8 @@
 package starwars.dto;
 
+import java.util.List;
 import lombok.Builder;
 
-import java.util.List;
-
 @Builder
-public record SwapiPeopleResponse(Integer count,
-                                  String next,
-                                  String previous,
-                                  List<SwapiCharacterResponse> results) {
-
-}
+public record SwapiPeopleResponse(
+        Integer count, String next, String previous, List<SwapiCharacterResponse> results) {}

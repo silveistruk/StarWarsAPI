@@ -14,9 +14,10 @@ public class RestClientConfig {
     private final int connectTimeout;
     private final int readTimeout;
 
-    public RestClientConfig(@Value("${swapi.url}") String swapiUrl,
-                            @Value("${swapi.connect-timeout}") int connectTimeout,
-                            @Value("${swapi.read-timeout}") int readTimeout) {
+    public RestClientConfig(
+            @Value("${swapi.url}") String swapiUrl,
+            @Value("${swapi.connect-timeout}") int connectTimeout,
+            @Value("${swapi.read-timeout}") int readTimeout) {
         this.swapiUrl = swapiUrl;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
@@ -24,10 +25,7 @@ public class RestClientConfig {
 
     @Bean
     RestClient swapiRestClient(RestClient.Builder builder) {
-        return builder
-                .baseUrl(swapiUrl)
-                .requestFactory(requestFactory())
-                .build();
+        return builder.baseUrl(swapiUrl).requestFactory(requestFactory()).build();
     }
 
     private ClientHttpRequestFactory requestFactory() {

@@ -3,5 +3,4 @@ package starwars.dto;
 import lombok.Builder;
 
 @Builder
-public record LoginRequest(String username, String password) {
-}
+public record LoginRequest(String username, String password) {}

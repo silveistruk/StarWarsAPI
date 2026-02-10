@@ -1,12 +1,11 @@
 package starwars.service;
 
+import java.util.Arrays;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import starwars.dto.CharacterResponse;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class FavouritesService {

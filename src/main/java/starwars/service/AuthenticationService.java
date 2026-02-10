@@ -1,17 +1,16 @@
 package starwars.service;
 
+import java.time.Instant;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import starwars.dto.*;
 import starwars.exception.UnauthorizedException;
-
-import java.time.Instant;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AuthenticationService {
@@ -23,8 +22,9 @@ public class AuthenticationService {
     private final long accessTokenExpiry;
     private final long refreshTokenExpiry;
 
-    public AuthenticationService(@Value("${auth.access-token-expiry}") long accessTokenExpiry,
-                                 @Value("${auth.refresh-token-expiry}") long refreshTokenExpiry) {
+    public AuthenticationService(
+            @Value("${auth.access-token-expiry}") long accessTokenExpiry,
+            @Value("${auth.refresh-token-expiry}") long refreshTokenExpiry) {
         this.accessTokenExpiry = accessTokenExpiry;
         this.refreshTokenExpiry = refreshTokenExpiry;
     }
@@ -126,8 +126,10 @@ public class AuthenticationService {
     }
 
     private void validateRequest(LoginRequest request) {
-        if (request.username() == null || request.username().isBlank()
-                || request.password() == null || request.password().isBlank()) {
+        if (request.username() == null
+                || request.username().isBlank()
+                || request.password() == null
+                || request.password().isBlank()) {
             throw new UnauthorizedException("Invalid username or password");
         }
     }
@@ -138,6 +140,5 @@ public class AuthenticationService {
         }
     }
 
-    private record TokenData(String username, long expiryTime) {
-    }
+    private record TokenData(String username, long expiryTime) {}
 }

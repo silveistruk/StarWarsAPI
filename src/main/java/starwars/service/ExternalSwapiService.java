@@ -23,9 +23,10 @@ public class ExternalSwapiService {
     private final String peoplePath;
     private final String characterPath;
 
-    public ExternalSwapiService(RestClient restClient,
-                                @Value("${swapi.path.people}") String peoplePath,
-                                @Value("${swapi.path.character}") String characterPath) {
+    public ExternalSwapiService(
+            RestClient restClient,
+            @Value("${swapi.path.people}") String peoplePath,
+            @Value("${swapi.path.character}") String characterPath) {
         this.restClient = restClient;
         this.peoplePath = peoplePath;
         this.characterPath = characterPath;
@@ -36,11 +37,8 @@ public class ExternalSwapiService {
         logger.info("Fetching people from SWAPI - page: {}", page);
 
         try {
-            ResponseEntity<SwapiPeopleResponse> response = restClient
-                    .get()
-                    .uri(peoplePath + page)
-                    .retrieve()
-                    .toEntity(SwapiPeopleResponse.class);
+            ResponseEntity<SwapiPeopleResponse> response =
+                    restClient.get().uri(peoplePath + page).retrieve().toEntity(SwapiPeopleResponse.class);
 
             if (response.getStatusCode() == HttpStatus.OK && response.hasBody()) {
                 logger.info("Successfully fetched page {} from SWAPI", page);
@@ -62,11 +60,8 @@ public class ExternalSwapiService {
         logger.info("Fetching person {} from SWAPI", id);
 
         try {
-            ResponseEntity<SwapiCharacterResponse> response = restClient
-                    .get()
-                    .uri(characterPath, id)
-                    .retrieve()
-                    .toEntity(SwapiCharacterResponse.class);
+            ResponseEntity<SwapiCharacterResponse> response =
+                    restClient.get().uri(characterPath, id).retrieve().toEntity(SwapiCharacterResponse.class);
 
             if (response.getStatusCode() == HttpStatus.OK && response.hasBody()) {
                 logger.info("Successfully fetched person {} from SWAPI", id);
