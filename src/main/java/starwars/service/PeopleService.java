@@ -2,6 +2,7 @@ package starwars.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import starwars.dto.CharacterResponse;
 import starwars.dto.PeopleResponse;
@@ -21,6 +22,7 @@ public class PeopleService {
         this.swapiService = swapiService;
     }
 
+    @Cacheable(value = "PeopleService::getPeople", key = "#page")
     public PeopleResponse getPeople(Integer page) {
         logger.debug("Getting people list for page: {}", page);
 
@@ -42,6 +44,7 @@ public class PeopleService {
                 .build();
     }
 
+    @Cacheable(value = "PeopleService::getCharacterById", key = "#id")
     public CharacterResponse getCharacterById(Integer id) {
         logger.debug("Getting person details for ID: {}", id);
 
