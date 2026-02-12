@@ -89,7 +89,6 @@ public class AuthenticationService {
         logger.info("Logout attempt");
 
         Objects.requireNonNull(accessToken, "AccessToken must not be null");
-
         TokenData tokenData = accessTokens.remove(accessToken);
         if (tokenData != null) {
             refreshTokens

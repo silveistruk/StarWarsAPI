@@ -32,7 +32,6 @@ public class ExternalSwapiService {
         this.characterPath = characterPath;
     }
 
-    // todo add caching
     public SwapiPeopleResponse getPeople(Integer page) {
         logger.info("Fetching people from SWAPI - page: {}", page);
 
@@ -55,7 +54,6 @@ public class ExternalSwapiService {
         }
     }
 
-    // todo add caching
     public SwapiCharacterResponse getCharacterById(Integer id) {
         logger.info("Fetching person {} from SWAPI", id);
 

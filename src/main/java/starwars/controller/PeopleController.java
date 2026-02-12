@@ -20,14 +20,15 @@ public class PeopleController {
     }
 
     @GetMapping
-    public ResponseEntity<PeopleResponse> getPeople(@RequestParam(defaultValue = "1") Integer page) {
-        logger.info("GET /people - page: {}", page);
+    public ResponseEntity<PeopleResponse> getPeople(
+            @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        logger.info("GET /people?page={}", page);
         PeopleResponse response = peopleService.getPeople(page);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CharacterResponse> getCharacterById(@PathVariable Integer id) {
+    public ResponseEntity<CharacterResponse> getCharacterById(@PathVariable("id") Integer id) {
         logger.info("GET /people/{} - fetching character details", id);
         CharacterResponse response = peopleService.getCharacterById(id);
         return ResponseEntity.ok(response);

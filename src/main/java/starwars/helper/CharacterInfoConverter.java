@@ -33,6 +33,12 @@ public class CharacterInfoConverter {
                 .build();
     }
 
+    public static String generateUlr(String originUrl, String hostUrl) {
+        if (originUrl == null) return null;
+
+        return hostUrl + originUrl.substring(originUrl.indexOf("?"));
+    }
+
     private static String convertToMeters(String height) {
         if (height == null || height.equalsIgnoreCase(UNKNOWN) || !isNumeric(height)) {
             return UNKNOWN;

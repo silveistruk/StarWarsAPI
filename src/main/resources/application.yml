@@ -1,10 +1,11 @@
 swapi:
   url: https://swapi.dev/api
+  host-url: http://localhost:8080/people
   connect-timeout: 5000
   read-timeout: 10000
   path:
-    people: people/?page=
-    character: people/{id}
+    people: /people/?page=
+    character: /people/{id}
 
 auth:
   access-token-expiry: 600000

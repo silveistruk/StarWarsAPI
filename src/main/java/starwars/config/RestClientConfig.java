@@ -24,8 +24,8 @@ public class RestClientConfig {
     }
 
     @Bean
-    RestClient swapiRestClient(RestClient.Builder builder) {
-        return builder.baseUrl(swapiUrl).requestFactory(requestFactory()).build();
+    RestClient swapiRestClient() {
+        return RestClient.builder().baseUrl(swapiUrl).requestFactory(requestFactory()).build();
     }
 
     private ClientHttpRequestFactory requestFactory() {
